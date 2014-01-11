@@ -13,6 +13,7 @@ action :create do
               :hostname => hostname,
               :unicorn_socket => unicorn_socket,
               :unicorn_instance_name => unicorn_instance_name
+    cookbook "unicorn"
     notifies :restart, "service[nginx]"
   end
 end

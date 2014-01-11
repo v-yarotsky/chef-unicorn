@@ -1,3 +1,5 @@
+use_inline_resources
+
 def unicorn_instance_name
   unicorn_instance_name = "unicorn_#{new_resource.name}"
 end
@@ -44,6 +46,7 @@ action :create do
               :unicorn_err => unicorn_err,
               :unicorn_pid => unicorn_pid,
               :unicorn_instance_name => unicorn_instance_name
+    cookbook "unicorn"
     notifies :restart, "service[#{unicorn_instance_name}]"
   end
 
@@ -52,6 +55,7 @@ action :create do
     owner "root"
     group "root"
     mode  "0755"
+    cookbook "unicorn"
     variables :unicorn_config => unicorn_config,
               :unicorn_environment => unicorn_environment,
               :unicorn_pid => unicorn_pid
