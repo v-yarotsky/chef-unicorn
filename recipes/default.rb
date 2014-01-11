@@ -1,2 +1,2 @@
-gem_package "unicorn"
+ruby_gem "unicorn"
 

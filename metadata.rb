@@ -6,3 +6,4 @@ description      'Installs/Configures unicorn and nginx vhosts'
 version          '0.0.1'
 
 depends "nginx"
+depends "ruby"
