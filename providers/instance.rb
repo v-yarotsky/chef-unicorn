@@ -7,6 +7,8 @@ end
 action :create do
   unicorn_app_path = new_resource.app_path
   unicorn_environment = new_resource.environment
+  unicorn_owner = new_resource.owner
+  unicorn_group = new_resource.group
 
   unicorn_path = new_resource.path
   log_path    = ::File.join(unicorn_path, "log")
@@ -14,8 +16,8 @@ action :create do
 
   [unicorn_path, log_path, pid_path].each do |dir|
     directory dir do
-      owner "root"
-      group "root"
+      owner unicorn_owner
+      group unicorn_group
       mode  "0755"
       recursive true
     end
@@ -27,8 +29,8 @@ action :create do
 
   [unicorn_out, unicorn_err, unicorn_pid].each do |f|
     file f do
-      owner "root"
-      group "root"
+      owner unicorn_owner
+      group unicorn_group
       mode  "0644"
       action :touch
     end
@@ -38,8 +40,8 @@ action :create do
 
   template unicorn_config do
     source "unicorn.rb.erb"
-    owner "root"
-    group "root"
+    owner unicorn_owner
+    group unicorn_group
     mode  "0644"
     variables :app_path    => unicorn_app_path,
               :unicorn_out => unicorn_out,
